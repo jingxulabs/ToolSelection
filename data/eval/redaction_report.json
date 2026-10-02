@@ -1,0 +1,25 @@
+{
+  "note": "credential-shaped strings and home-directory paths removed before publication; see scripts/redact_secrets.py for rationale and the embedding-staleness consequence. Cumulative across runs.",
+  "by_file": {
+    "data/corpus/catalog.jsonl": {
+      "aws_access_key_id": 1,
+      "jwt_or_b64_blob": 1
+    },
+    "data/catalog/catalog.jsonl": {
+      "aws_access_key_id": 1,
+      "jwt_or_b64_blob": 1
+    },
+    "data/generated/standard_L2.jsonl": {
+      "stripe_style_key": 1,
+      "jwt_or_b64_blob": 1
+    },
+    "data/generated/standard_L4.jsonl": {
+      "slack_token": 2,
+      "stripe_style_key": 3,
+      "bearer_literal": 1,
+      "jwt_or_b64_blob": 1,
+      "home_dir_path": 1
+    }
+  },
+  "total": 14
+}

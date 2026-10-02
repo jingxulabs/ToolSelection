@@ -1,0 +1,11 @@
+{
+  "matrix": "data/eval/tool_embeddings_minilm_v3.npy",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "text_variant": "v3",
+  "query_prefix": "",
+  "dim": 384,
+  "rows": 3551,
+  "catalog": "data/corpus/catalog.jsonl",
+  "catalog_sha256": "6fa9134dc06456c4",
+  "mean_doc_words": 35.9
+}

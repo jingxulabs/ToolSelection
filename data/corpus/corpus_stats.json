@@ -1,0 +1,22 @@
+{
+  "catalog_total": 3551,
+  "catalog_by_source": {
+    "metatool": 199,
+    "apis.guru": 3352
+  },
+  "labeled_tools": 199,
+  "heldout_tools": 39,
+  "splits": {
+    "C_unseen_tools": 3845,
+    "dev_A": 2006,
+    "test_A": 3355,
+    "train": 11326
+  },
+  "intents_total": 20532,
+  "distractor_ratio": 17.8,
+  "seed": 13,
+  "notes": [
+    "Splits A/C only. Splits D (confusion), E (abstention), G (drift) are built by make_hard_splits.py once embeddings exist.",
+    "All MetaTool queries are LLM-generated; human validation of 500 still required (design 4.3)."
+  ]
+}

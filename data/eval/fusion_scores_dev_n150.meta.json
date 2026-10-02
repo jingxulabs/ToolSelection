@@ -1,0 +1,8 @@
+{
+  "matrix": "data/eval/tool_embeddings_gtelarge_v3.npy",
+  "dense_model": "thenlper/gte-large",
+  "text_variant": "v3",
+  "partition": "dev",
+  "n": 150,
+  "seed": 13
+}

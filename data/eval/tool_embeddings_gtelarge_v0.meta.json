@@ -1,0 +1,12 @@
+{
+  "matrix": "data/eval/tool_embeddings_gtelarge_v0.npy",
+  "model": "thenlper/gte-large",
+  "text_variant": "v0",
+  "query_prefix": "",
+  "doc_prefix": "",
+  "dim": 1024,
+  "rows": 3551,
+  "catalog": "data/corpus/catalog.jsonl",
+  "catalog_sha256": "6fa9134dc06456c4",
+  "mean_doc_words": 27.8
+}

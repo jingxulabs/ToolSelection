@@ -1,0 +1,11 @@
+{
+  "mode": "abstain",
+  "level": "L2",
+  "intents": 500,
+  "calls": 34,
+  "errors": 0,
+  "cost_usd": 2.4395,
+  "cost_per_intent": 0.00488,
+  "elapsed_s": 116,
+  "out": "data/generated/abstain_L2.jsonl"
+}

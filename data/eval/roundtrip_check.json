@@ -1,0 +1,75 @@
+{
+  "k": 20,
+  "cost_usd": 6.4467,
+  "calls": 58,
+  "errors": 0,
+  "elapsed_s": 140,
+  "splits": {
+    "metatool_test": {
+      "n": 75,
+      "correct": 43,
+      "none": 1,
+      "tied": 1,
+      "missing": 26,
+      "answered": 49,
+      "accuracy": 0.8776,
+      "none_pct": 2.0,
+      "tied_pct": 2.0
+    },
+    "splitD_inseparable": {
+      "n": 75,
+      "correct": 38,
+      "none": 2,
+      "tied": 17,
+      "missing": 23,
+      "answered": 52,
+      "accuracy": 0.7308,
+      "none_pct": 3.8,
+      "tied_pct": 32.7
+    },
+    "splitD_separable": {
+      "n": 75,
+      "correct": 47,
+      "none": 1,
+      "tied": 0,
+      "missing": 23,
+      "answered": 52,
+      "accuracy": 0.9038,
+      "none_pct": 1.9,
+      "tied_pct": 0.0
+    },
+    "splitE_abstain": {
+      "n": 75,
+      "correct": 38,
+      "none": 38,
+      "tied": 0,
+      "missing": 31,
+      "answered": 44,
+      "accuracy": 0.8636,
+      "none_pct": 86.4,
+      "tied_pct": 0.0
+    },
+    "standard_L2": {
+      "n": 75,
+      "correct": 46,
+      "none": 0,
+      "tied": 1,
+      "missing": 27,
+      "answered": 48,
+      "accuracy": 0.9583,
+      "none_pct": 0.0,
+      "tied_pct": 2.1
+    },
+    "standard_L3": {
+      "n": 75,
+      "correct": 41,
+      "none": 0,
+      "tied": 0,
+      "missing": 30,
+      "answered": 45,
+      "accuracy": 0.9111,
+      "none_pct": 0.0,
+      "tied_pct": 0.0
+    }
+  }
+}

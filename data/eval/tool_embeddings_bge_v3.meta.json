@@ -1,0 +1,11 @@
+{
+  "matrix": "data/eval/tool_embeddings_bge_v3.npy",
+  "model": "BAAI/bge-base-en-v1.5",
+  "text_variant": "v3",
+  "query_prefix": "Represent this sentence for searching relevant passages: ",
+  "dim": 768,
+  "rows": 3551,
+  "catalog": "data/corpus/catalog.jsonl",
+  "catalog_sha256": "6fa9134dc06456c4",
+  "mean_doc_words": 35.9
+}

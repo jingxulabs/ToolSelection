@@ -1,0 +1,11 @@
+{
+  "mode": "standard",
+  "level": "L3",
+  "intents": 996,
+  "calls": 67,
+  "errors": 0,
+  "cost_usd": 7.0253,
+  "cost_per_intent": 0.00705,
+  "elapsed_s": 485,
+  "out": "data/generated/standard_L3.jsonl"
+}

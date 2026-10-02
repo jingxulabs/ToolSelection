@@ -1,0 +1,14 @@
+{
+  "mode": "confusion",
+  "level": "L2",
+  "intents": 1120,
+  "calls": 113,
+  "errors": 0,
+  "cost_usd": 10.3045,
+  "cost_per_intent": 0.0092,
+  "elapsed_s": 447,
+  "out": "data/generated/confusion_L2.jsonl",
+  "separable": 1007,
+  "inseparable": 113,
+  "inseparable_pct": 10.1
+}

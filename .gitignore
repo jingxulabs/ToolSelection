@@ -1,0 +1,36 @@
+# --- environment -------------------------------------------------------------
+.venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# --- third-party raw downloads ------------------------------------------------
+# 319 MB, and NOT ours to redistribute. MetaTool (MIT), ToolACE (Apache-2.0) and
+# Glaive (Apache-2.0) are all re-downloadable via scripts/fetch_apisguru.py and
+# scripts/build_corpus.py. glaive_v2/data-00000-of-00001.arrow alone exceeds
+# GitHub's 100 MB hard limit and would fail the push.
+data/raw/
+
+# --- large regenerable binaries ----------------------------------------------
+# 10 embedding matrices, ~108 MB. Rebuild with:
+#   ./.venv/bin/python scripts/build_embeddings.py --model <m> --text v3 --out <f>
+data/eval/*.npy
+
+# Derived training triplets (18 MB) -- regenerate with:
+#   ./.venv/bin/python scripts/mine_hard_negatives.py --device mps
+data/corpus/train_triplets.jsonl
+
+# Fine-tuned checkpoints (1.3 GB each for gte-large)
+models/
+
+# --- scratch ------------------------------------------------------------------
+/tmp/
+*.log
+
+# --- deliberately KEPT (documenting the decision) -----------------------------
+# data/corpus/*.jsonl        unified catalog + splits (29 MB) -- the corpus itself
+# data/generated/*.jsonl     4,585 LLM-generated intents ($33.94 to rebuild)
+# data/catalog/              APIs.guru pre-merge snapshot (4 MB)
+# data/eval/*.json           all sweep results and metrics
+# data/eval/*.npz            per-item ranks + cached cross-encoder scores (~1 MB,
+#                            but ~70 min of local compute to regenerate)

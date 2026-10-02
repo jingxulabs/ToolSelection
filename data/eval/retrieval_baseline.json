@@ -1,0 +1,228 @@
+{
+  "test_A": {
+    "n": 1200,
+    "pools": {
+      "pool_199": {
+        "dense": {
+          "recall@1": 0.54,
+          "recall@5": 0.7617,
+          "recall@10": 0.815,
+          "recall@25": 0.8892,
+          "recall@50": 0.9317,
+          "recall@100": 0.9725,
+          "mrr@100": 0.6416
+        },
+        "bm25": {
+          "recall@1": 0.2958,
+          "recall@5": 0.4825,
+          "recall@10": 0.5492,
+          "recall@25": 0.645,
+          "recall@50": 0.7325,
+          "recall@100": 0.855,
+          "mrr@100": 0.3826
+        }
+      },
+      "pool_500": {
+        "dense": {
+          "recall@1": 0.5083,
+          "recall@5": 0.735,
+          "recall@10": 0.7925,
+          "recall@25": 0.86,
+          "recall@50": 0.905,
+          "recall@100": 0.9458,
+          "mrr@100": 0.6115
+        },
+        "bm25": {
+          "recall@1": 0.2725,
+          "recall@5": 0.4283,
+          "recall@10": 0.5042,
+          "recall@25": 0.5808,
+          "recall@50": 0.6408,
+          "recall@100": 0.7167,
+          "mrr@100": 0.346
+        }
+      },
+      "pool_1000": {
+        "dense": {
+          "recall@1": 0.4833,
+          "recall@5": 0.7083,
+          "recall@10": 0.7658,
+          "recall@25": 0.83,
+          "recall@50": 0.8817,
+          "recall@100": 0.9208,
+          "mrr@100": 0.5841
+        },
+        "bm25": {
+          "recall@1": 0.2608,
+          "recall@5": 0.4017,
+          "recall@10": 0.4667,
+          "recall@25": 0.5442,
+          "recall@50": 0.5975,
+          "recall@100": 0.6533,
+          "mrr@100": 0.3262
+        }
+      },
+      "pool_2000": {
+        "dense": {
+          "recall@1": 0.4542,
+          "recall@5": 0.6675,
+          "recall@10": 0.7308,
+          "recall@25": 0.7975,
+          "recall@50": 0.8425,
+          "recall@100": 0.8925,
+          "mrr@100": 0.551
+        },
+        "bm25": {
+          "recall@1": 0.2467,
+          "recall@5": 0.3675,
+          "recall@10": 0.4217,
+          "recall@25": 0.505,
+          "recall@50": 0.5583,
+          "recall@100": 0.61,
+          "mrr@100": 0.3039
+        }
+      },
+      "pool_3551": {
+        "dense": {
+          "recall@1": 0.4417,
+          "recall@5": 0.6367,
+          "recall@10": 0.7075,
+          "recall@25": 0.7708,
+          "recall@50": 0.815,
+          "recall@100": 0.8608,
+          "mrr@100": 0.5311
+        },
+        "bm25": {
+          "recall@1": 0.2408,
+          "recall@5": 0.3417,
+          "recall@10": 0.3908,
+          "recall@25": 0.4658,
+          "recall@50": 0.52,
+          "recall@100": 0.5725,
+          "mrr@100": 0.2891
+        }
+      }
+    }
+  },
+  "C_unseen_tools": {
+    "n": 1200,
+    "pools": {
+      "pool_199": {
+        "dense": {
+          "recall@1": 0.5592,
+          "recall@5": 0.7483,
+          "recall@10": 0.8317,
+          "recall@25": 0.9108,
+          "recall@50": 0.945,
+          "recall@100": 0.9817,
+          "mrr@100": 0.6464
+        },
+        "bm25": {
+          "recall@1": 0.3217,
+          "recall@5": 0.4625,
+          "recall@10": 0.5183,
+          "recall@25": 0.5958,
+          "recall@50": 0.6642,
+          "recall@100": 0.7725,
+          "mrr@100": 0.39
+        }
+      },
+      "pool_500": {
+        "dense": {
+          "recall@1": 0.5292,
+          "recall@5": 0.71,
+          "recall@10": 0.7933,
+          "recall@25": 0.87,
+          "recall@50": 0.9208,
+          "recall@100": 0.9567,
+          "mrr@100": 0.616
+        },
+        "bm25": {
+          "recall@1": 0.305,
+          "recall@5": 0.4225,
+          "recall@10": 0.4833,
+          "recall@25": 0.5392,
+          "recall@50": 0.5892,
+          "recall@100": 0.6508,
+          "mrr@100": 0.3616
+        }
+      },
+      "pool_1000": {
+        "dense": {
+          "recall@1": 0.505,
+          "recall@5": 0.6925,
+          "recall@10": 0.7633,
+          "recall@25": 0.8392,
+          "recall@50": 0.8917,
+          "recall@100": 0.93,
+          "mrr@100": 0.5919
+        },
+        "bm25": {
+          "recall@1": 0.2967,
+          "recall@5": 0.3983,
+          "recall@10": 0.4533,
+          "recall@25": 0.5192,
+          "recall@50": 0.5533,
+          "recall@100": 0.5967,
+          "mrr@100": 0.3465
+        }
+      },
+      "pool_2000": {
+        "dense": {
+          "recall@1": 0.49,
+          "recall@5": 0.6583,
+          "recall@10": 0.73,
+          "recall@25": 0.8017,
+          "recall@50": 0.8583,
+          "recall@100": 0.8983,
+          "mrr@100": 0.5697
+        },
+        "bm25": {
+          "recall@1": 0.2867,
+          "recall@5": 0.3742,
+          "recall@10": 0.4233,
+          "recall@25": 0.4942,
+          "recall@50": 0.5283,
+          "recall@100": 0.57,
+          "mrr@100": 0.3314
+        }
+      },
+      "pool_3551": {
+        "dense": {
+          "recall@1": 0.4733,
+          "recall@5": 0.6342,
+          "recall@10": 0.6917,
+          "recall@25": 0.7742,
+          "recall@50": 0.8283,
+          "recall@100": 0.8708,
+          "mrr@100": 0.5478
+        },
+        "bm25": {
+          "recall@1": 0.2775,
+          "recall@5": 0.355,
+          "recall@10": 0.3992,
+          "recall@25": 0.4683,
+          "recall@50": 0.5083,
+          "recall@100": 0.535,
+          "mrr@100": 0.3176
+        }
+      }
+    }
+  },
+  "confusion_pairs": {
+    "n_pairs_over_0.75": 2,
+    "n_over_0.85": 0,
+    "top5": [
+      {
+        "a": "metatool::housepurchasingtool",
+        "b": "metatool::houserentingtool",
+        "sim": 0.7653
+      },
+      {
+        "a": "metatool::houserentingtool",
+        "b": "metatool::housepurchasingtool",
+        "sim": 0.7653
+      }
+    ]
+  }
+}

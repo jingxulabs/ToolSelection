@@ -1,0 +1,12 @@
+{
+  "matrix": "data/eval/tool_embeddings_e5base_v3.npy",
+  "model": "intfloat/e5-base-v2",
+  "text_variant": "v3",
+  "query_prefix": "query: ",
+  "doc_prefix": "passage: ",
+  "dim": 768,
+  "rows": 3551,
+  "catalog": "data/corpus/catalog.jsonl",
+  "catalog_sha256": "6fa9134dc06456c4",
+  "mean_doc_words": 36.9
+}

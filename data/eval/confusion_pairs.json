@@ -1,0 +1,12 @@
+[
+  {
+    "a": "metatool::housepurchasingtool",
+    "b": "metatool::houserentingtool",
+    "sim": 0.7653
+  },
+  {
+    "a": "metatool::houserentingtool",
+    "b": "metatool::housepurchasingtool",
+    "sim": 0.7653
+  }
+]
