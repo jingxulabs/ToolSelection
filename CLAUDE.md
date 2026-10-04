@@ -32,7 +32,7 @@ changed twice on measurement, and both decisions are settled:
   those tools are the gold for **3.6% of eval items and 4.4% of the miss mass**, because
   `generate_intents.py` had to read a description to write an intent, so `dq1` tools appear
   as gold at **0.150×** their catalog rate. Headroom ceiling is +0.037 R@10, below the
-  +6.0 the free `v3` text already delivered. Don't spend the $7 on it; 73% of items have a
+  +6.0 the free `v3` text already delivered. Not worth running; 73% of items have a
   *well-documented* gold and carry 66% of the misses. **H1 is refuted by headroom**, not
   untested — its +10–25 pts exceeds what either stage can give.
 - **BM25 fusion is measured and dead** (§10). Both window and full-catalog variants:
@@ -57,7 +57,7 @@ Strict order within each stage; each step consumes the previous one's output.
 **Stage A costs money** (`claude` calls); stages B and C are local and free.
 
 ```bash
-# --- A. corpus + intent generation (done; data/generated/ costs ~$34 to rebuild)
+# --- A. corpus + intent generation (done; rebuilding data/generated/ needs paid API calls)
 ./.venv/bin/python scripts/fetch_apisguru.py --n-apis 400 --per-provider 2   # -> data/catalog/
 ./.venv/bin/python scripts/build_corpus.py                                   # -> data/corpus/ (catalog + splits)
 ./.venv/bin/python scripts/build_embeddings.py                               # -> data/eval/tool_embeddings.npy
@@ -120,16 +120,17 @@ is wrong and the numbers are not reportable.
 ## Things that will bite you
 
 **Scripts calling `claude` spend real money on the user's account.** Get explicit
-approval before any run, and state the estimate. Spend so far: $40.39.
+approval before any run, and state the estimate.
 
 **Prompt caching dominates cost.** The CLI loads a ~27k-token harness prompt per call:
-**$0.197 cold vs $0.026 warm**, 5-minute TTL. Long runs must be *continuous* — a
+**a cold call costs roughly 7.5× a warm one**, 5-minute TTL. Long runs must be
+*continuous* — a
 trickled run costs ~7×. This is why generation batches many tools per call and uses
 several workers.
 
 **`--budget-usd` truncates silently.** When the cap is hit, remaining work units return
 empty and the script still exits 0. This already cost real coverage: the round-trip
-check hit its $6 cap and 32 of 90 calls returned nothing, leaving ~48 items per split
+check hit its budget cap and 32 of 90 calls returned nothing, leaving ~48 items per split
 instead of 75. Always compare the final `n` against what you asked for.
 
 **Only `claude-opus-5` is reachable.** Haiku and every other model return HTTP 403 on
@@ -139,7 +140,7 @@ the user provides a key.
 
 **Local non-generative models do work, and are free.** `sentence-transformers`
 bi-encoders and cross-encoders download from the HF Hub and run on `--device mps` —
-§6–§8 are built entirely on them at $0. Budget wall-clock, not dollars: ~90 pairs/sec
+§6–§8 are built entirely on them for free. Budget wall-clock rather than spend: ~90 pairs/sec
 for `bge-reranker-base` and ~30/sec for `bge-reranker-large`, and throughput degrades
 ~40% over an hour as the machine heats up, so a full sweep is ~70 min. Run these in the
 background and cache the scores.
@@ -278,7 +279,7 @@ prefer `--text`.)
 | `data/raw/` | third-party downloads (MetaTool, ToolACE, Glaive) | yes, slow |
 | `data/catalog/` | APIs.guru only, pre-merge | yes |
 | `data/corpus/` | unified catalog + splits | yes, fast |
-| `data/generated/` | LLM-generated intents | **costs ~$34 to rebuild** |
+| `data/generated/` | LLM-generated intents | **needs paid API calls** |
 | `data/eval/` | embeddings (+`.meta.json` sidecars), baselines, round-trip, sweeps | yes, ~70 min |
 
 `data/eval/` holds 10 embedding matrices (~108 MB), `fusion_scores_dev_n150.npz` — the

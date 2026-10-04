@@ -41,7 +41,7 @@ matter how good the selector is.
 | `FINDINGS.md` | publication summary: what helped, what didn't, and the transferable lessons |
 | `scripts/` | the pipeline, run by hand in order (see below) |
 | `data/corpus/` | unified catalog + splits |
-| `data/generated/` | 4,585 LLM-generated intents (**$33.94** to rebuild) |
+| `data/generated/` | 4,585 LLM-generated intents (rebuilding needs paid API calls) |
 | `data/eval/` | sweep results, metrics, per-item ranks |
 
 ## Setup

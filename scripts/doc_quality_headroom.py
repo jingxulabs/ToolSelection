@@ -21,7 +21,7 @@ R@k would be if the low-quality buckets retrieved as well as the well-documented
 This is an UPPER BOUND, not a prediction, and it is loose in a specific direction:
 doc_quality correlates with how obscure a tool is, so part of the gap is intrinsic
 difficulty that no rewriting touches. Read it as a ceiling -- if the ceiling is small,
-stop; if it is large, the measurement is worth $7.
+stop; if it is large, the rewrite is worth measuring.
 
 Runs over the FULL dev partition (not n=150) because it is free and this estimate is
 power-sensitive. Dense-only, no cross-encoder, ~1 min.

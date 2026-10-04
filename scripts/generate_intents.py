@@ -10,8 +10,8 @@ confusion : split D. Gives the model a tool AND its nearest confusable neighbour
             This is what keeps generated labels honest on near-misses.
 abstain   : split E. In-domain intents that NO catalog tool can satisfy.
 
-Cost note: the `claude` CLI pays ~27k cached prompt tokens per call. Cold that is
-~$0.20; warm (<5 min) it is ~$0.026. Run continuously -- do not trickle.
+Cost note: the `claude` CLI pays ~27k cached prompt tokens per call. A cold call runs
+roughly 7.5x a warm one (<5 min TTL). Run continuously -- do not trickle.
 """
 
 import argparse, json, os, random, re, subprocess, sys, threading, time

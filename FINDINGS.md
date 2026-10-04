@@ -1,7 +1,8 @@
 # Tool Selection from User Intent: What Worked, What Didn't
 
 *Findings summary. Numbers trace to `DATA.md`; the plan they were measured against is
-`EXPERIMENT_DESIGN.md`. Total cost: **$40.39**, almost all of it one-time data generation.*
+`EXPERIMENT_DESIGN.md`. Intent generation was the only paid stage; everything measured
+below ran on local models.*
 
 ## 1. Goal
 
@@ -21,7 +22,7 @@ selection gets measured.** Production agents face thousands. We built the missin
 |---|---|---|
 | APIs.guru | 3,352 real API operations | Realistic catalog, **no labels** |
 | MetaTool | 199 tools, 20,532 labeled pairs | The labels (GPT-4-made, so independent of Claude) |
-| Generated | 4,585 intents, $33.94 | Labels for the APIs.guru tools |
+| Generated | 4,585 intents | Labels for the APIs.guru tools |
 
 Merged into **3,551 tools — 199 labeled, 3,352 distractors (17.8:1).** One number justifies
 the construction: recall@100 falls **0.973 → 0.861** going from 199 to 3,551 candidates. At
