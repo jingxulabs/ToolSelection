@@ -1,0 +1,69 @@
+{
+  "dry_run": true,
+  "k": 25,
+  "depth": 100,
+  "alpha": 0.2,
+  "partition": "dev",
+  "n": 150,
+  "matrix": "data/eval/tool_embeddings_gtelarge_v3.npy",
+  "seed": 13,
+  "left_factor": {
+    "dev_A": {
+      "n": 150,
+      "R@k_dense": 0.9,
+      "R@k_fused": 0.9,
+      "rescued": 0,
+      "lost": 0
+    },
+    "standard_L2": {
+      "n": 150,
+      "R@k_dense": 0.7266666666666667,
+      "R@k_fused": 0.7266666666666667,
+      "rescued": 1,
+      "lost": 1
+    },
+    "standard_L3": {
+      "n": 150,
+      "R@k_dense": 0.68,
+      "R@k_fused": 0.7066666666666667,
+      "rescued": 4,
+      "lost": 0
+    },
+    "standard_L4": {
+      "n": 150,
+      "R@k_dense": 0.7,
+      "R@k_fused": 0.7133333333333334,
+      "rescued": 2,
+      "lost": 0
+    },
+    "splitD_separable": {
+      "n": 150,
+      "R@k_dense": 0.86,
+      "R@k_fused": 0.8733333333333333,
+      "rescued": 2,
+      "lost": 0
+    },
+    "splitD_inseparable": {
+      "n": 39,
+      "R@k_dense": 0.7948717948717948,
+      "R@k_fused": 0.8205128205128205,
+      "rescued": 1,
+      "lost": 0
+    }
+  },
+  "left_factor_pooled": {
+    "n": 639,
+    "R@k_dense": 0.7449139280125195,
+    "R@k_fused": 0.758998435054773,
+    "d": 0.014084507042253502,
+    "rescued": 10,
+    "lost": 1,
+    "mcnemar_p": 0.01171875,
+    "ci95": [
+      0.0046948356807511304,
+      0.025039123630672955
+    ]
+  },
+  "stage3_items": 1297,
+  "stage3_calls_est": 163
+}
