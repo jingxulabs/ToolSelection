@@ -13,7 +13,7 @@ Two documents are the source of truth, and they serve different roles:
 
 - **`EXPERIMENT_DESIGN.md`** — the plan: hypotheses (H1–H6), the arm ladder, splits,
   metrics, confounds, statistics, and the §12 pre-registered gating criteria.
-- **`DATA.md`** — what was actually acquired and run, with real numbers and costs.
+- **`DATA.md`** — what was actually acquired and run, with real numbers.
   Where the two disagree, DATA.md is what happened.
 
 **Read `DATA.md` §4c–4d and §6–§9 before proposing work.** The direction has already

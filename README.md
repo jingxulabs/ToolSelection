@@ -37,7 +37,7 @@ matter how good the selector is.
 | path | contents |
 |---|---|
 | `EXPERIMENT_DESIGN.md` | the plan: hypotheses H1–H6, arms, splits, metrics, pre-registered gating criteria |
-| `DATA.md` | **what actually happened** — every run, with real numbers and costs. Where the two disagree, this one is authoritative |
+| `DATA.md` | **what actually happened** — every run, with real numbers. Where the two disagree, this one is authoritative |
 | `FINDINGS.md` | publication summary: what helped, what didn't, and the transferable lessons |
 | `scripts/` | the pipeline, run by hand in order (see below) |
 | `data/corpus/` | unified catalog + splits |

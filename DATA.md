@@ -108,7 +108,7 @@ that no public benchmark provides.
 ## 4b. Split D pilot — generated, validated
 
 `scripts/generate_intents.py --mode confusion`. 60 intents over tool pairs with
->0.85 similarity. **$0.58, 55s, 0 errors.**
+>0.85 similarity. **55s, 0 errors.**
 
 The generator is asked for a request the TARGET satisfies and its NEIGHBOUR does
 not — and is explicitly permitted to answer `separable: false`. **6.7% came back
@@ -131,22 +131,22 @@ R@1 is half MetaTool's while R@10/R@100 match. The gold tool is retrieved into t
 neighbourhood but ranks below its twin — near-miss discrimination isolated from
 retrieval. **MetaTool cannot produce this signal at all** (zero pairs >0.85).
 
-Cost: **$0.0096/intent** for confusion mode (two tool specs per item). Caching is
-load-bearing — $0.197 cold vs $0.026 warm per call, so runs must be continuous.
+Prompt caching is load-bearing for confusion mode (two tool specs per item): a cold
+call costs roughly 7.5× a warm one, so runs must be continuous.
 
 ## 4c. Full generation — complete
 
-`scripts/generate_intents.py`, 347 calls, **0 errors**, **$33.94** (est. was $28; I
-under-costed per-intent by ~30%).
+`scripts/generate_intents.py`, 347 calls, **0 errors**. This is the one stage that
+calls a paid API; everything from §6 on runs locally.
 
-| Set | n | $/intent | Cost |
-|---|---:|---:|---:|
-| Split D (confusion, sim≥0.82) | 1,120 | 0.0092 | $10.30 |
-| Standard L2 | 987 | 0.0067 | $6.65 |
-| Standard L3 | 996 | 0.0070 | $7.03 |
-| Standard L4 | 982 | 0.0077 | $7.52 |
-| Split E (abstention) | 500 | 0.0049 | $2.44 |
-| **Total** | **4,585** | | **$33.94** |
+| Set | n |
+|---|---:|
+| Split D (confusion, sim≥0.82) | 1,120 |
+| Standard L2 | 987 |
+| Standard L3 | 996 |
+| Standard L4 | 982 |
+| Split E (abstention) | 500 |
+| **Total** | **4,585** |
 
 Split D used sim≥0.82 (1,124 pairs available) rather than 0.85 (844) to approach the
 1,500 target; dropping to 0.78 would have diluted the confusion signal. Final: 1,120.
@@ -171,9 +171,13 @@ difficulty comparison rather than one confounded with tool identity.
 - **Difficulty ladder is not monotonic.** L3 (indirect) is harder than L4 (distractor
   context): R@10 0.394 vs 0.432. Treat L2/L3/L4 as three conditions, not a scale.
 
+**Circularity warning:** MetaTool (GPT-4-generated), ToolACE, Glaive and xLAM are all
+LLM-generated. Generate split D with a *different* model family from whatever you
+evaluate, or the numbers are inflated for free (design §4.2).
+
 ## 4d. Round-trip validity check — and the finding that changes the plan
 
-`scripts/roundtrip_check.py`, $6.45. Gold forced into a k=20 shortlist (oracle
+`scripts/roundtrip_check.py`. Gold forced into a k=20 shortlist (oracle
 retrieval) to separate "hard but valid" from "noisy labels".
 
 | Split | answered | accuracy | tied% |
@@ -204,40 +208,14 @@ error mass, **~83% is retrieval miss and ~7% is selection error.**
 separable items. Two unrelated mechanisms agree, so the 10.1% rate is real. Those
 items are variant F (set-valued gold), not model errors.
 
-**Limitation:** the $6 budget cap truncated the run — 32 of 90 calls returned empty,
+**Limitation:** a budget cap truncated the run — 32 of 90 calls returned empty,
 leaving ~48 answered items per split instead of 75. 95% CI ≈ ±6 pts, so differences
 *among* generated splits are not significant. The selection-vs-retrieval gap
 (0.93 vs 0.15) is far too large to be affected.
 
-## 5. Next — revised after §4d  *(superseded by §8; kept for the audit trail)*
-
-Data collection is done. The §12 gate redirected the experiment from *training a
-better selector* to *fixing retrieval*, so the remaining work changed:
-
-1. **Retrieval sweep (new top priority).** all-MiniLM-L6-v2 is a weak 384-dim baseline
-   and is doing all the losing. Test stronger encoders (BGE-large, E5-mistral, GTE),
-   hybrid dense+BM25 fusion, and a cross-encoder reranker over the top-100 — where
-   R@100 is 0.76–0.88, so a reranker has real headroom to exploit.
-2. **Arm 2 (description rewriting).** Now doubly motivated: it improves the text the
-   *retriever* indexes, not just the selection prompt. 86 tools have no usable
-   description and 441 score ≤1 on doc_quality. ~$7.
-3. **k-sweep for the operating point.** Selection holds ~0.93 at k=20; find where
-   recall gains stop paying for added prompt cost.
-4. **Arms 4–5: dropped.** Not on preference — on the 83% retrieval-miss measurement.
-5. **Not needed anymore:** human validation of 500 (round-trip settled label validity),
-   xLAM access (was SFT fodder for a dropped arm).
-
-Total spend to here: **$40.39** (generation $33.94 + round-trip $6.45).
-
-**Circularity warning:** MetaTool (GPT-4-generated), ToolACE, Glaive and xLAM are all
-LLM-generated. Generate split D with a *different* model family from whatever you
-evaluate, or the numbers are inflated for free (design §4.2).
-
----
-
 ## 6. Retrieval sweep — encoder and document text (2026-09-30)
 
-The S1 redirect from §4d, executed. All local models: **$0, no API spend.**
+The S1 redirect from §4d, executed. **All local models, no API spend.**
 `scripts/build_embeddings.py` gained multi-encoder support with correct asymmetric
 prefixes (BGE prefixes the query only; E5 prefixes *both* sides — scoring E5 without
 `passage: ` on documents measures a handicap, not the encoder) and four document
@@ -295,7 +273,7 @@ dedup** at cosine >0.95.
 ## 7. Reranking does not work here — measured, negative
 
 `scripts/rerank_sweep.py --partition dev --n 150 --device mps`, 157,800 query-document
-pairs over two cross-encoders. **$0, ~70 min local.** → `data/eval/rerank_sweep.json`.
+pairs over two cross-encoders. **~70 min, local.** → `data/eval/rerank_sweep.json`.
 
 The motivating argument was sound on its face: with gte-large/v3, R@100 is 0.83–0.95
 while R@10 is 0.56–0.76, so 20–30 points of gold is already retrieved but ranked too
@@ -364,7 +342,7 @@ framing as a verdict on *reranking* was too broad.
 
 ## 8. Score fusion — the §7 verdict reverses
 
-`scripts/fusion_sweep.py --partition dev --n 150 --device mps`. **$0, ~70 min local.**
+`scripts/fusion_sweep.py --partition dev --n 150 --device mps`. **~70 min, local.**
 → `data/eval/fusion_sweep.json`, scores cached to `fusion_scores_dev_n150.npz` so the
 α × depth × rule sweep re-runs in seconds.
 
@@ -430,44 +408,39 @@ ranks, so no paired significance test is possible; the evidence is consistency �
 5/6 splits improve on R@1 and MRR, 6/6 on R@10. **standard_L4 regresses** (R@1 −0.047),
 unexplained, and it was also the split where replacement did worst.
 
-## 9. Next — revised after §8  *(item 1 resolved by §10; items 2 and 5 by §11–§12)*
+## 9. Dispositions — what each proposal became
 
-1. **~~Hybrid dense+BM25 fusion~~ — DONE, negative (§10).** Ran both window and
-   full-catalog variants. +0.014 mean MRR at best, pooled R@1 +0.003 (p=0.85), and it
-   fails §8's own both-rules-agree test. No rescue headroom exists to exploit: the union
-   of dense and BM25 top-100 adds +0.000 golds on four of six splits. **Do not
-   re-propose.**
-2. **~~Arm 2 (description rewriting), ~$7~~ — screened, do not run as scoped (§11).** The
-   motivation was catalog counts (86 no-description, 441 at doc_quality ≤1); those tools
-   turn out to be the gold for 3.6% of eval items and 4.4% of the miss mass, because the
-   intent generator skipped tools it could not read (`dq1` appears as gold at 0.150× its
-   catalog rate). Headroom ceiling is +0.037 R@10, below the +6.0 the free v3 text
-   already delivered. If revived: retarget at thin/`dq2` docs, not the empty tail.
-3. **k-sweep for the operating point.** Selection held ~0.93 at k=20 (§4d). With
-   retrieval now at R@25 0.68–0.82, find where recall gains stop paying prompt cost.
-4. **One test-partition run, on the composed pipeline only** (encoder + fusion + chosen
-   k) — not the encoder alone (§6 methodological debt), and not the §8 argmax config
-   without expecting regression to the mean (§8 limits).
-5. **~~Persist per-item ranks~~ — DONE (§10 natively, §7–§8 back-filled in §12).** The
-   tests changed the status of two of the four claims they touched. **Rule going forward:
-   no number from §6–§12 gets quoted or carried into the test run without an interval.**
-6. **Open, now with a lead:** why `standard_L4` regresses under fusion. §12.5 shows it is
-   hostile to the cross-encoder in *every* configuration and significantly so
-   (replacement −0.180 R@1, p=0.00003) — the only split where replacement is significant
-   at any depth. Hypothesis to test: L4's decoy context is attended to by a cross-encoder
-   and averaged away by a bi-encoder.
-7. **Screen new retrieval signals on union recall headroom before sweeping them** (§10.7).
-   Minutes of work, and it would have predicted §10's negative result in advance.
-8. **Not pursued:** reranking by replacement (§7), BM25 fusion (§10), arm 2 as scoped
-   (§11). Arms 4–5 remain dropped (§4d).
-9. **H1 should be scored, not left open** (§11.3). Its +10–25 pt prediction exceeds the
-   headroom available in either stage; record it as refuted-by-headroom.
+Kept for the item numbers that §10–§12 refer back to. Detail lives in the section
+that settled each one; nothing here is a plan.
 
-**Spend unchanged at $40.39** — everything in §6–§12 ran on local models.
+1. **Hybrid dense+BM25 fusion** — ran, negative. §10.
+2. **Arm 2, description rewriting** — screened out, do not run as scoped. §11.
+3. **k-sweep for the operating point** — **not run.** Selection held ~0.93 at k=20
+   (§4d) and retrieval is now at R@25 0.68–0.82, so k≈25 remains a provisional
+   choice, not a measured one. This is the open item that matters most.
+4. **One test-partition run, on the composed pipeline only** — not run. If it is:
+   encoder + fusion + chosen k together, not the encoder alone (§6 methodological
+   debt), and not the §8 argmax config without expecting regression to the mean.
+5. **Persist per-item ranks** — done, §10 natively and §7–§8 back-filled in §12.
+   The tests changed the status of two of the four claims they touched. **Rule: no
+   number from §6–§12 gets quoted or carried into a test run without an interval.**
+6. **Why `standard_L4` regresses under fusion** — open, with a lead. §12.5 shows it
+   is hostile to the cross-encoder in *every* configuration and significantly so
+   (replacement −0.180 R@1, p=0.00003), the only split where replacement is
+   significant at any depth. Hypothesis: L4's decoy context is attended to by a
+   cross-encoder and averaged away by a bi-encoder.
+7. **Screen new retrieval signals on union recall headroom before sweeping them**
+   (§10.7). Minutes of work, and it would have predicted §10's negative in advance.
+8. **Not pursued:** reranking by replacement (§7), BM25 fusion (§10), arm 2 as
+   scoped (§11). Arms 4–5 remain dropped (§4d).
+9. **H1 scored, not left open** (§11.3). Its +10–25 pt prediction exceeds the
+   headroom available in either stage: refuted by headroom.
+
+Everything in §6–§12 ran on local models.
 
 ## 10. BM25 × dense fusion — measured, negative (2026-10-02)
 
-`scripts/bm25_fusion.py --partition dev --n 150 --device mps`. **$0, ~2 min local.**
+`scripts/bm25_fusion.py --partition dev --n 150 --device mps`. **~2 min, local.**
 → `data/eval/bm25_fusion.json` + `bm25_fusion_ranks_dev_n150.npz` (per-item ranks).
 
 §9 item 1 promoted this as "the cheapest high-value run": §8 showed the fusion *rule* is
@@ -559,7 +532,7 @@ predicted the negative result before any sweep was run.
 
 ## 11. Arm 2 headroom screen — descriptions are not where the error mass is (2026-10-02)
 
-`scripts/doc_quality_headroom.py --device mps`. **$0, ~1 min.**
+`scripts/doc_quality_headroom.py --device mps`. **~1 min, local.**
 → `data/eval/doc_quality_headroom.json`. Full dev partition, all items (not n=150),
 `gte-large`/v3.
 
@@ -628,13 +601,13 @@ available cannot validate arm 2's effect size — just its direction.
 eval intent" would leak labels into the index): `doc_quality≤1` 703 tools (mean 6.5 desc
 words); `desc_words≤5` 1,079 (mean 3.0); `no_description` 144.
 
-**Verdict: do not spend the $7 on arm 2 as scoped in §9 item 2.** The premise does not
+**Verdict: do not run arm 2 as scoped in §9 item 2.** The premise does not
 hold on this benchmark. If it is run, retarget it at thin/`dq2` documentation and
 pre-register the expectation as ≤+0.037 R@10, not H1's +10–25.
 
 ## 12. Significance tests back-filled onto §7 and §8 (2026-10-02)
 
-`scripts/significance_backfill.py`. **$0, seconds, no recompute** — it re-reads
+`scripts/significance_backfill.py`. **Seconds, no recompute** — it re-reads
 `fusion_scores_dev_n150.npz`, which holds the per-query × per-candidate score matrices and
 is therefore strictly more informative than the aggregates §7/§8 persisted.
 → `data/eval/significance_backfill.json` + `significance_backfill_ranks.npz` (534 per-item
